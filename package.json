@@ -33,6 +33,7 @@
     "mongoose-unique-validator": "^1.0.5",
     "qs": "^6.4.0",
     "request": "^2.81.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "wordpos": "^1.1.2"
   }
 }
