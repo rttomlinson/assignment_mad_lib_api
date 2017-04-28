@@ -5,77 +5,115 @@ const User = mongoose.model("User");
 const qs = require("qs");
 
 describe("App", () => {
-  const baseUrl = "http://localhost:8081";
-  const apiUrl = baseUrl + "/api/v1/";
-  let server;
-  let user;
-  const apiUrlFor = (type, params) => {
-    params = params ? `&${qs.stringify(params)}` : "";
-    return `${apiUrl}${type}?token=${user.token}${params}`;
-  };
-  const j = str => JSON.parse(str);
+    const baseUrl = "http://localhost:8081";
+    const apiUrl = baseUrl + "/api/v1/";
+    let server;
+    let user;
+    const apiUrlFor = (type, params) => {
+        params = params ? `&${qs.stringify(params)}` : "";
+        return `${apiUrl}${type}?token=${user.token}${params}`;
+    };
+    const j = str => JSON.parse(str);
 
-  beforeAll(done => {
-    server = app.listen(8081, () => {
-      done();
+    beforeAll(done => {
+        server = app.listen(8081, () => {
+            done();
+        });
     });
-  });
 
-  beforeEach(done => {
-    User.create({
-      fname: "Foo",
-      lname: "Bar",
-      email: "foobar@gmail",
-      password: "password"
-    }).then(result => {
-      user = result;
-      done();
+    beforeEach(done => {
+        User.create({
+            fname: "Foo",
+            lname: "Bar",
+            email: "foobar@gmail",
+            password: "password"
+        }).then(result => {
+            user = result;
+            done();
+        });
     });
-  });
 
-  afterAll(done => {
-    server.close();
-    server = null;
-    done();
-  });
-
-  // ----------------------------------------
-  // App
-  // ----------------------------------------
-  it("renders the home page", done => {
-    request.get(baseUrl, (err, res, body) => {
-      expect(res.statusCode).toBe(200);
-      done();
+    afterAll(done => {
+        server.close();
+        server = null;
+        done();
     });
-  });
 
-  describe("Api call", () => {
     // ----------------------------------------
-    // POS Endpoints
+    // App
     // ----------------------------------------
-
-    it("returns JSON object containing an array of nouns", done => {
-      request.get(apiUrlFor("nouns", {count: 10}), (err, res, body) => {
-        let result = j(body);
-        expect(Array.isArray(result)).toBe(true);
-        done();
-      });
+    it("renders the home page", done => {
+        request.get(baseUrl, (err, res, body) => {
+            expect(res.statusCode).toBe(200);
+            done();
+        });
     });
 
-    xit("contains the number of nouns in the count parameter", done => {
-      request.get(apiUrlFor("nouns", {count: 10}), (err, res, body) => {
-        let result = j(body);
-        expect(result.nouns.length).toBe(10);
-        done();
-      });
-    });
+    describe("Api call", () => {
+        // ----------------------------------------
+        // POS Endpoints
+        // ----------------------------------------
+        describe("nouns endpoint", () => {
+            it("returns an array", done => {
+                request.get(apiUrlFor("nouns", {
+                    count: 10
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(Array.isArray(result)).toBe(true);
+                    done();
+                });
+            });
 
-    xit("contains the number of nouns in the count parameter", done => {
-      request.get(apiUrlFor("nouns", {count: 100}), (err, res, body) => {
-        let result = j(body);
-        expect(result.nouns.length).toBe(100);
-        done();
-      });
+            it("contains the number of nouns in the count parameter", done => {
+                request.get(apiUrlFor("nouns", {
+                    count: 10
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(result.length).toBe(10);
+                    done();
+                });
+            });
+
+            it("contains the number of nouns in the count parameter", done => {
+                request.get(apiUrlFor("nouns", {
+                    count: 100
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(result.length).toBe(100);
+                    done();
+                });
+            });
+        });
+        describe("verb endpoint", () => {
+            it("returns an array", done => {
+                request.get(apiUrlFor("verbs", {
+                    count: 10
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(Array.isArray(result)).toBe(true);
+                    done();
+                });
+            });
+
+            xit("contains the number of verbs in the count parameter", done => {
+                request.get(apiUrlFor("verbs", {
+                    count: 10
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(result.length).toBe(10);
+                    done();
+                });
+            });
+
+            xit("contains the number of verbs in the count parameter", done => {
+                request.get(apiUrlFor("verbs", {
+                    count: 100
+                }), (err, res, body) => {
+                    let result = j(body);
+                    expect(result.length).toBe(100);
+                    done();
+                });
+            });
+        });
     });
-  });
 });
