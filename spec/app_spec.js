@@ -133,7 +133,7 @@ describe("App", () => {
         );
       });
     });
-    xdescribe("adective endpoint", () => {
+    describe("adjective endpoint", () => {
       it("returns an array", done => {
         request.get(
           apiUrlFor("adjectives", {
@@ -173,7 +173,7 @@ describe("App", () => {
         );
       });
     });
-    xdescribe("adverb endpoint", () => {
+    describe("adverb endpoint", () => {
       it("returns an array", done => {
         request.get(
           apiUrlFor("adverbs", {
