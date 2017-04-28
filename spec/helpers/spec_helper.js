@@ -1,22 +1,21 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 // Set test environment
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 
-
-beforeAll((done) => {
+beforeAll(done => {
   if (mongoose.connection.readyState) {
     done();
   } else {
-    require('./../../mongo')()
-      .then(() => done());
+    require("./../../seeds/clean")().then(() =>
+      require("./../../mongo")().then(() => {
+        done();
+      }));
   }
 });
 
-
-afterEach((done) => {
-  require('./../../seeds/clean')()
+afterEach(done => {
+  require("./../../seeds/clean")()
     .then(() => done())
-    .catch((e) => console.error(e.stack));
+    .catch(e => console.error(e.stack));
 });
