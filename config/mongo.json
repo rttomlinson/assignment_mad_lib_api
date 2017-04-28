@@ -4,7 +4,7 @@
         "host": "localhost"
     },
     "test": {
-        "database": "demo_exploring_mongoose_test",
+        "database": "assignment_mad_lib_api_test",
         "host": "localhost"
     },
     "production": {
