@@ -31,16 +31,13 @@ app.use(flash());
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/assignment_mad_lib_api");
 
-
 ////
 //Authentication
 ////
 
 //we can to see if they have a sessionId on req.session.sessionId
-// const authenticateUser = require("./services/auth");
-// app.use(authenticateUser)
-
-
+const authenticateUser = require("./services/auth");
+app.use(authenticateUser);
 
 ////
 //Routers
@@ -61,10 +58,6 @@ app.engine(
   })
 );
 app.set("view engine", "hbs");
-
-
-
-
 
 ////
 //Server Listen
