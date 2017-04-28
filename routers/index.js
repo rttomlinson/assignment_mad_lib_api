@@ -3,12 +3,17 @@ const router = app.Router();
 const mongoose = require("mongoose");
 const models = require("../models");
 const User = models.User;
+const SessionIdHelper = require("../services/session.js");
+
+
+
 
 router.get("/", (req, res) => {
+    console.log("See if sessionId is set on req.session", req.session);
   if (req.user) {
     res.render("home");
   } else {
-    redirect("/login");
+    res.redirect("/login");
   }
 });
 
@@ -34,6 +39,7 @@ router.post("/signup", (req, res) => {
     password
   }).then(user => {
     console.log(user);
+    req.session.sessionId = SessionIdHelper.createSignedSessionId(user.email);
     res.redirect("/");
   });
 });

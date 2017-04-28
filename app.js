@@ -30,8 +30,17 @@ app.use(flash());
 ////
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/assignment_mad_lib_api");
-const models = require("./models");
-const User = models.User;
+
+
+////
+//Authentication
+////
+
+//we can to see if they have a sessionId on req.session.sessionId
+// const authenticateUser = require("./services/auth");
+// app.use(authenticateUser)
+
+
 
 ////
 //Routers
@@ -52,9 +61,14 @@ app.engine(
   })
 );
 app.set("view engine", "hbs");
+
+
+
+
+
 ////
 //Server Listen
 ////
 const hostname = process.env.HOST || "localhost";
 const port = process.env.PORT || 3000;
-app.listen(port, hostname);
+app.listen(port);
