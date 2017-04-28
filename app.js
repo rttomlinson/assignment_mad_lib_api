@@ -107,17 +107,12 @@ app.use(authService({
 
 
 
-////
-//Routers
-////
-// const indexRouter = require("./routers/index");
-// app.use("/", indexRouter);
-
-
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+const apiRouter = require("./routers/api");
 const usersRouter = require('./routers/users');
+app.use("/api/v1", apiRouter);
 app.use('/', usersRouter);
 
 ////
