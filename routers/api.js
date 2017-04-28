@@ -1,3 +1,4 @@
+const Sentencer = require("sentencer");
 const express = require("express");
 const router = express();
 const wordPOS = require("wordpos");
@@ -43,5 +44,31 @@ router.get("/adverbs", (req, res, next) => {
     .catch(next);
 });
 
+router.post("/madlibs", (req, res, next) => {
+  Sentencer.configure({
+    nounList: req.body.nouns,
+    adjectiveList: req.body.adjectives,
+    verbsList: req.body.verbs,
+    adverbsList: req.body.adverbs,
+    actions: {
+      adverb: function() {
+        let i = Math.floor(Math.random() * adverbsList.length);
+        return adverbsList[i];
+      },
+      verb: function() {
+        let i = Math.floor(Math.random() * verbsList.length);
+        return verbsList[i];
+      }
+    }
+  });
+  console.log("in the route", req.body.sentences);
+  Promise.all(
+    req.body.sentences.map(sentence => {
+      sentence = Sentencer.make(sentence);
+    })
+  ).then(madlib => {
+    res.json(madlib);
+  });
+});
 
 module.exports = router;
