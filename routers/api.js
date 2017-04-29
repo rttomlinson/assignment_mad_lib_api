@@ -61,7 +61,7 @@ router.post("/madlibs", (req, res, next) => {
         console.log("results from getPOS", results);
         let adverbsAndVerbs = [];
 
-        if (!results.adverbs.length === 0) {
+        if (!(results.adverbs.length === 0)) {
             adverbsAndVerbs.push(results.adverbs);
         }
         else {
@@ -70,7 +70,7 @@ router.post("/madlibs", (req, res, next) => {
                     count: 100
                 }));
         }
-        if (!results.verbs.length === 0) {
+        if (!(results.verbs.length === 0)) {
             adverbsAndVerbs.push(results.verbs);
         }
         else {

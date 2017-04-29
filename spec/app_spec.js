@@ -294,7 +294,7 @@ describe("App", () => {
                     }
                 );
             });
-            xit("returns sentences with noun, verb, adjective and default adverb", done => {
+            it("returns sentences with noun, verb, adjective and default adverb", done => {
                 let form = {
                     words: "bunny sing different",
                     sentence: "The {{adjective}} {{ noun }} {{ verb }} {{adverb}}."
@@ -311,7 +311,7 @@ describe("App", () => {
                     }
                 );
             });
-            xit("returns sentences with noun, adjective, adverb and default verb", done => {
+            it("returns sentences with noun, adjective, adverb and default verb", done => {
                 let form = {
                     words: "bunny different calmly",
                     sentence: "The {{adjective}} {{ noun }} {{ verb }} {{adverb}}."
